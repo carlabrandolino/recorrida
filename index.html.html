@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Recorrida">
+<title>Recorrida Juzgados</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Syne:wght@700;800&family=DM+Mono:wght@500&display=swap');
+
+  :root {
+    --bg:        #f5f0eb;
+    --surface:   #ffffff;
+    --surface2:  #fdf8f4;
+    --border:    #e8dfd6;
+
+    --mint:      #b8e4d4;
+    --mint-dark: #5bbf9f;
+    --mint-text: #2d7a61;
+
+    --peach:     #f7c8b0;
+    --peach-dark:#e87e50;
+    --peach-text:#8a3e1e;
+
+    --lavender:  #d4c8f0;
+    --lav-dark:  #9278d8;
+    --lav-text:  #4a2f8a;
+
+    --sky:       #bcd8f0;
+    --sky-dark:  #5295cc;
+    --sky-text:  #1d4e78;
+
+    --rose:      #f5c2cc;
+    --rose-dark: #d95c72;
+    --rose-text: #7a1e30;
+
+    --yellow:    #f7e8a0;
+    --yel-dark:  #c8a800;
+    --yel-text:  #5a4500;
+
+    --text:      #2d2520;
+    --muted:     #9e8e84;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────── */
+  header {
+    background: var(--surface);
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .app-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .app-title strong { color: var(--mint-dark); }
+  .header-date {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+    margin-top: 3px;
+    text-transform: capitalize;
+  }
+  .badge {
+    background: var(--mint);
+    color: var(--mint-text);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
+  .new-recorrida-btn {
+    width: 100%;
+    background: var(--yellow);
+    color: var(--yel-text);
+    border: 2px solid var(--yel-dark);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 9px 14px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .new-recorrida-btn:not(:disabled):active { background: var(--yel-dark); color: #fff; transform: scale(0.98); }
+  .new-recorrida-btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── NOTICE ──────────────────────────────────────────────── */
+  .notice {
+    margin: 12px 16px 0;
+    background: var(--yellow);
+    border: 1.5px solid var(--yel-dark);
+    border-radius: 14px;
+    padding: 11px 14px;
+    font-size: 12px;
+    color: var(--yel-text);
+    line-height: 1.55;
+    display: none;
+    font-weight: 600;
+  }
+  .notice.visible { display: block; }
+
+  /* ── SECTIONS ────────────────────────────────────────────── */
+  .section {
+    background: var(--surface);
+    margin: 12px 16px 0;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* ── BUILDING GRID ───────────────────────────────────────── */
+  .building-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .building-btn {
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 9px 10px;
+    background: var(--surface2);
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.18s;
+    -webkit-appearance: none;
+    line-height: 1.3;
+  }
+  .building-btn:active { transform: scale(0.97); }
+  .building-btn[data-color="mint"].active   { background: var(--mint);     border-color: var(--mint-dark);   color: var(--mint-text); }
+  .building-btn[data-color="peach"].active  { background: var(--peach);    border-color: var(--peach-dark);  color: var(--peach-text); }
+  .building-btn[data-color="lav"].active    { background: var(--lavender); border-color: var(--lav-dark);    color: var(--lav-text); }
+  .building-btn[data-color="sky"].active    { background: var(--sky);      border-color: var(--sky-dark);    color: var(--sky-text); }
+  .building-btn[data-color="rose"].active   { background: var(--rose);     border-color: var(--rose-dark);   color: var(--rose-text); }
+
+  /* ── JUZGADO NUMBER PICKER ───────────────────────────────── */
+  .juzgado-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .juzgado-label-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .juzgado-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+    text-align: center;
+    width: 80px;
+    flex: 0 0 80px;
+  }
+  .juzgado-input:focus { border-color: var(--mint-dark); background: #fff; }
+  .juzgado-input::placeholder { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+  .juzgado-confirm-btn {
+    background: var(--mint);
+    color: var(--mint-text);
+    border: 2px solid var(--mint-dark);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 10px 16px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .juzgado-confirm-btn:active { background: var(--mint-dark); color: #fff; transform: scale(0.97); }
+
+  .selected-juzgado-display {
+    margin-top: 10px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .selected-juzgado-display.visible { display: flex; }
+  .selected-juzgado-display .change-link {
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 700;
+  }
+
+  /* ── MIC SECTION ─────────────────────────────────────────── */
+  .mic-section {
+    background: var(--surface);
+    margin: 10px 16px 0;
+    border-radius: 18px;
+    padding: 20px 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .live-preview {
+    width: 100%;
+    background: #edfaf5;
+    border: 2px dashed var(--mint-dark);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--mint-text);
+    line-height: 1.5;
+    font-weight: 600;
+    display: none;
+    min-height: 40px;
+  }
+  .live-preview.visible { display: block; }
+  .mic-btn {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    background: var(--surface2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .mic-btn svg { width: 32px; height: 32px; fill: var(--muted); transition: fill 0.2s; }
+  .mic-btn.recording {
+    border-color: var(--rose-dark);
+    background: var(--rose);
+    animation: pulse-ring 1.3s infinite;
+    box-shadow: 0 4px 20px rgba(217,92,114,0.3);
+  }
+  .mic-btn.recording svg { fill: var(--rose-dark); }
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(217,92,114,0.4); }
+    70%  { box-shadow: 0 0 0 18px rgba(217,92,114,0); }
+    100% { box-shadow: 0 0 0 0 rgba(217,92,114,0); }
+  }
+  .mic-label { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .mic-label.recording { color: var(--rose-dark); }
+  .mode-toggle {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ── FALLBACK ────────────────────────────────────────────── */
+  .fallback-section {
+    background: var(--surface);
+    margin: 10px 16px 0;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border);
+    display: none;
+  }
+  .fallback-section.visible { display: block; }
+  .fallback-row { display: flex; gap: 8px; align-items: flex-end; }
+  .fallback-textarea {
+    flex: 1;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 11px 14px;
+    resize: none;
+    height: 76px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    line-height: 1.5;
+  }
+  .fallback-textarea:focus { border-color: var(--mint-dark); }
+  .fallback-textarea::placeholder { color: var(--muted); font-size: 12px; }
+  .save-btn {
+    background: var(--mint);
+    color: var(--mint-text);
+    border: 2px solid var(--mint-dark);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 0 16px;
+    height: 76px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .save-btn:active { background: var(--mint-dark); color: #fff; transform: scale(0.97); }
+
+  /* ── ENTRIES ─────────────────────────────────────────────── */
+  .entries-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 16px 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .entries-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 6px 0 10px;
+    z-index: 10;
+  }
+  .entries-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.4px; color: var(--muted); }
+  .clear-btn {
+    background: none;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: all 0.15s;
+  }
+  .clear-btn:active { border-color: var(--rose-dark); color: var(--rose-dark); }
+  .empty-state {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
+  .entry-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 13px 14px;
+    margin-bottom: 9px;
+    box-shadow: var(--card-shadow);
+    animation: slide-in 0.22s ease;
+  }
+  @keyframes slide-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .entry-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .entry-tag { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+  .entry-right { display: flex; align-items: center; gap: 8px; }
+  .entry-time { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .entry-delete {
+    background: none; border: none; color: var(--muted); font-size: 18px;
+    cursor: pointer; padding: 0 2px; line-height: 1; -webkit-appearance: none;
+    transition: color 0.15s; font-weight: 700;
+  }
+  .entry-delete:active { color: var(--rose-dark); }
+  .entry-text { font-size: 13px; color: var(--text); line-height: 1.55; font-weight: 600; }
+
+  /* ── BOTTOM BAR ──────────────────────────────────────────── */
+  .bottom-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  .copy-btn {
+    width: 100%;
+    background: var(--peach);
+    color: var(--peach-text);
+    border: 2px solid var(--peach-dark);
+    border-radius: 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-appearance: none;
+  }
+  .copy-btn:not(:disabled):active { background: var(--peach-dark); color: #fff; transform: scale(0.98); }
+  .copy-btn:disabled { opacity: 0.35; cursor: default; }
+
+  /* ── TOAST ───────────────────────────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--mint-dark);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 13px 28px;
+    border-radius: 50px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s;
+    z-index: 200;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(91,191,159,0.4);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div>
+      <div class="app-title">Recorrida <strong>Juzgados</strong></div>
+      <div class="header-date" id="headerDate"></div>
+    </div>
+    <span class="badge" id="badgeCount">0 notas</span>
+  </div>
+  <button class="new-recorrida-btn" id="newRecorridaBtn" onclick="newRecorrida()" disabled>
+    🗓️ Nueva recorrida — borrar día anterior
+  </button>
+</header>
+
+<div class="notice" id="micNotice"></div>
+
+<!-- EDIFICIO + JUZGADO -->
+<div class="section">
+  <div class="section-label">📍 Edificio</div>
+  <div class="building-grid" id="buildingGrid"></div>
+
+  <div class="section-label" style="margin-top:14px">🔢 Juzgado / Secretaría</div>
+  <div class="juzgado-row">
+    <input class="juzgado-input" id="juzgadoNum" type="text"
+      inputmode="text" placeholder="62" maxlength="10"
+      autocomplete="off" autocorrect="off" spellcheck="false">
+    <button class="juzgado-confirm-btn" onclick="confirmJuzgado()">Confirmar ✓</button>
+  </div>
+  <div class="selected-juzgado-display" id="selectedDisplay">
+    <span id="selectedText"></span>
+    <span class="change-link" onclick="changeJuzgado()">cambiar</span>
+  </div>
+</div>
+
+<!-- MIC MODE -->
+<div class="mic-section" id="micSection">
+  <div class="live-preview" id="livePreview"></div>
+  <button class="mic-btn" id="micBtn" onclick="toggleMic()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 1a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm-1 18.93V22h2v-2.07A8 8 0 0 0 20 12h-2a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93z"/>
+    </svg>
+  </button>
+  <div class="mic-label" id="micLabel">Tocá para grabar</div>
+  <div class="mode-toggle" onclick="showFallback()">✏️ Prefiero escribir</div>
+</div>
+
+<!-- TEXT MODE -->
+<div class="fallback-section" id="fallbackSection">
+  <div class="section-label">✏️ Escribí lo que hiciste</div>
+  <div class="fallback-row">
+    <textarea class="fallback-textarea" id="fallbackText"
+      placeholder="Ej: hice 3 infoleg y conecté una impresora Lexmark…"></textarea>
+    <button class="save-btn" onclick="saveFallback()">Guardar ✓</button>
+  </div>
+  <div class="mode-toggle" style="margin-top:12px;text-align:center" onclick="showMic()">🎙 Prefiero el micrófono</div>
+</div>
+
+<!-- ENTRIES LIST -->
+<div class="entries-wrapper">
+  <div class="entries-header">
+    <span class="entries-title">📋 Registro del día</span>
+    <button class="clear-btn" onclick="clearAll()">Borrar todo</button>
+  </div>
+  <div id="entriesList"></div>
+</div>
+
+<div class="bottom-bar">
+  <button class="copy-btn" id="copyBtn" onclick="copyAll()" disabled>
+    📋 &nbsp;Copiar todo al portapapeles
+  </button>
+</div>
+
+<div class="toast" id="toast">¡Copiado al portapapeles! ✓</div>
+
+<script>
+// ── DATOS ─────────────────────────────────────────────────────
+const BUILDINGS = [
+  { name: 'Lavalle 1268',                 color: 'mint'  },
+  { name: 'Lavalle 1554',                 color: 'peach' },
+  { name: 'Paraná 520',                   color: 'sky'   },
+  { name: 'Cerrito 264',                  color: 'lav'   },
+  { name: 'Diag. Roque Sáenz Peña 1190', color: 'rose'  },
+];
+
+const TAG_STYLES = {
+  mint:  { bg: '#b8e4d4', color: '#2d7a61' },
+  peach: { bg: '#f7c8b0', color: '#8a3e1e' },
+  sky:   { bg: '#bcd8f0', color: '#1d4e78' },
+  lav:   { bg: '#d4c8f0', color: '#4a2f8a' },
+  rose:  { bg: '#f5c2cc', color: '#7a1e30' },
+};
+
+// ── STATE ──────────────────────────────────────────────────────
+let entries = [];
+try { entries = JSON.parse(localStorage.getItem('juz_entries') || '[]'); } catch(e){}
+
+let isRecording     = false;
+let recognition     = null;
+let interimResult   = '';
+let selectedBuilding = null;  // index
+let confirmedLabel  = '';     // "Lavalle 1268 – Juzgado 62"
+let confirmedColor  = 'sky';
+
+// ── DATE ───────────────────────────────────────────────────────
+function renderDate() {
+  const now = new Date();
+  const str = now.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+  document.getElementById('headerDate').textContent = str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// ── BUILDING GRID ──────────────────────────────────────────────
+function renderBuildingGrid() {
+  const grid = document.getElementById('buildingGrid');
+  grid.innerHTML = BUILDINGS.map((b, i) => {
+    const span = (BUILDINGS.length % 2 !== 0 && i === BUILDINGS.length - 1)
+      ? 'grid-column: 1 / -1;' : '';
+    return `<button class="building-btn" data-color="${b.color}" data-idx="${i}"
+      style="${span}" onclick="selectBuilding(${i}, this)">${b.name}</button>`;
+  }).join('');
+}
+
+function selectBuilding(i, el) {
+  selectedBuilding = i;
+  document.querySelectorAll('.building-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  // reset juzgado confirm
+  document.getElementById('juzgadoNum').value = '';
+  document.getElementById('selectedDisplay').classList.remove('visible');
+  confirmedLabel = '';
+  document.getElementById('juzgadoNum').focus();
+}
+
+// ── JUZGADO CONFIRM ────────────────────────────────────────────
+function confirmJuzgado() {
+  const num = document.getElementById('juzgadoNum').value.trim();
+  if (!num) { document.getElementById('juzgadoNum').focus(); return; }
+  if (selectedBuilding === null) {
+    showNotice('Primero elegí un edificio 👆');
+    return;
+  }
+  const b = BUILDINGS[selectedBuilding];
+  confirmedLabel = `${b.name} – ${num}`;
+  confirmedColor = b.color;
+
+  document.getElementById('selectedText').textContent = '✓ ' + confirmedLabel;
+  document.getElementById('selectedDisplay').classList.add('visible');
+  document.getElementById('juzgadoNum').style.display = 'none';
+  document.querySelector('.juzgado-confirm-btn').style.display = 'none';
+}
+
+function changeJuzgado() {
+  document.getElementById('selectedDisplay').classList.remove('visible');
+  document.getElementById('juzgadoNum').style.display = '';
+  document.querySelector('.juzgado-confirm-btn').style.display = '';
+  document.getElementById('juzgadoNum').value = '';
+  document.getElementById('juzgadoNum').focus();
+  confirmedLabel = '';
+}
+
+function getCurrentLabel() {
+  return confirmedLabel || (selectedBuilding !== null ? BUILDINGS[selectedBuilding].name : 'Sin especificar');
+}
+
+// ── MODE ───────────────────────────────────────────────────────
+function showFallback() {
+  document.getElementById('micSection').style.display = 'none';
+  document.getElementById('fallbackSection').classList.add('visible');
+}
+function showMic() {
+  document.getElementById('fallbackSection').classList.remove('visible');
+  document.getElementById('micSection').style.display = 'flex';
+}
+
+// ── FALLBACK TEXT ──────────────────────────────────────────────
+function saveFallback() {
+  const text = document.getElementById('fallbackText').value.trim();
+  if (!text) return;
+  saveEntry(getCurrentLabel(), text, confirmedColor || (selectedBuilding !== null ? BUILDINGS[selectedBuilding].color : 'sky'));
+  document.getElementById('fallbackText').value = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('fallbackText').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); saveFallback(); }
+  });
+});
+
+// ── SPEECH ─────────────────────────────────────────────────────
+function toggleMic() {
+  if (isRecording) stopMic(); else startMic();
+}
+
+function startMic() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { handleMicError('not-supported'); return; }
+
+  recognition = new SR();
+  recognition.lang = 'es-AR';
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  recognition.onstart = () => {
+    isRecording = true;
+    document.getElementById('micBtn').classList.add('recording');
+    document.getElementById('micLabel').textContent = 'Grabando… tocá para parar';
+    document.getElementById('micLabel').classList.add('recording');
+    document.getElementById('livePreview').classList.add('visible');
+  };
+
+  recognition.onresult = e => {
+    let interim = '', final = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) final += t; else interim += t;
+    }
+    if (final) interimResult += final;
+    document.getElementById('livePreview').textContent = interimResult + interim;
+  };
+
+  recognition.onerror = e => {
+    recognition.onend = null;
+    isRecording = false;
+    resetMicUI();
+    handleMicError(e.error);
+  };
+
+  recognition.onend = () => {
+    if (isRecording) { try { recognition.start(); } catch(e){} }
+  };
+
+  interimResult = '';
+  try { recognition.start(); } catch(e) { handleMicError('start-failed'); }
+}
+
+function stopMic() {
+  isRecording = false;
+  if (recognition) { recognition.onend = null; recognition.stop(); recognition = null; }
+  resetMicUI();
+  const text = interimResult.trim();
+  if (text) {
+    const color = confirmedColor || (selectedBuilding !== null ? BUILDINGS[selectedBuilding].color : 'sky');
+    saveEntry(getCurrentLabel(), text, color);
+  }
+  interimResult = '';
+  document.getElementById('livePreview').textContent = '';
+}
+
+function resetMicUI() {
+  document.getElementById('micBtn').classList.remove('recording');
+  document.getElementById('micLabel').textContent = 'Tocá para grabar';
+  document.getElementById('micLabel').classList.remove('recording');
+  document.getElementById('livePreview').classList.remove('visible');
+}
+
+function handleMicError(error) {
+  if (error === 'not-allowed' || error === 'service-not-allowed') {
+    showNotice('⚠️ Acceso al micrófono denegado. Necesitás abrir esto desde HTTPS (GitHub Pages). Usá el modo texto por ahora.');
+  } else if (error === 'not-supported') {
+    showNotice('⚠️ Tu navegador no soporta voz. Abrí con Safari en el iPhone.');
+  } else if (error !== 'aborted') {
+    showNotice('⚠️ Error de micrófono: ' + error + '. Probá el modo texto.');
+  } else { return; }
+  showFallback();
+}
+
+function showNotice(msg) {
+  const n = document.getElementById('micNotice');
+  n.innerHTML = msg;
+  n.classList.add('visible');
+}
+
+// ── ENTRIES ────────────────────────────────────────────────────
+function saveEntry(juzgado, text, color) {
+  const time = new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+  entries.unshift({ id: Date.now(), juzgado, text, time, color: color || 'sky' });
+  persist();
+  renderEntries();
+}
+
+function deleteEntry(id) {
+  entries = entries.filter(e => e.id !== id);
+  persist();
+  renderEntries();
+}
+
+function clearAll() {
+  if (!entries.length) return;
+  if (confirm('¿Borrar todas las notas del día?')) { entries = []; persist(); renderEntries(); }
+}
+
+function newRecorrida() {
+  if (!entries.length) return;
+  if (confirm('¿Empezar nueva recorrida? Esto borra todas las notas del día anterior.')) {
+    entries = [];
+    persist();
+    renderEntries();
+    // reset selector
+    selectedBuilding = null;
+    confirmedLabel = '';
+    document.querySelectorAll('.building-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('juzgadoNum').value = '';
+    document.getElementById('juzgadoNum').style.display = '';
+    document.querySelector('.juzgado-confirm-btn').style.display = '';
+    document.getElementById('selectedDisplay').classList.remove('visible');
+  }
+}
+
+function persist() {
+  try { localStorage.setItem('juz_entries', JSON.stringify(entries)); } catch(e){}
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderEntries() {
+  const count = entries.length;
+  document.getElementById('badgeCount').textContent = count + (count === 1 ? ' nota' : ' notas');
+  document.getElementById('copyBtn').disabled = count === 0;
+  document.getElementById('newRecorridaBtn').disabled = count === 0;
+
+  const list = document.getElementById('entriesList');
+  if (!count) {
+    list.innerHTML = `<div class="empty-state"><div class="icon">🗂️</div>Elegí un edificio,<br>confirmá el juzgado<br>y dictá o escribí lo que hiciste.</div>`;
+    return;
+  }
+  list.innerHTML = entries.map(e => {
+    const style = TAG_STYLES[e.color] || TAG_STYLES.sky;
+    return `
+    <div class="entry-card">
+      <div class="entry-top">
+        <span class="entry-tag" style="background:${style.bg};color:${style.color}">${esc(e.juzgado)}</span>
+        <div class="entry-right">
+          <span class="entry-time">${e.time}</span>
+          <button class="entry-delete" onclick="deleteEntry(${e.id})">×</button>
+        </div>
+      </div>
+      <div class="entry-text">${esc(e.text)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── COPY ───────────────────────────────────────────────────────
+function copyAll() {
+  if (!entries.length) return;
+  const text = [...entries].reverse()
+    .map(e => `[${e.time}] ${e.juzgado}\n${e.text}`)
+    .join('\n\n---\n\n');
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;width:1px;height:1px';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try { document.execCommand('copy'); showToast(); } catch(e) { alert('No se pudo copiar automáticamente.'); }
+    document.body.removeChild(ta);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(text).then(showToast).catch(fallback);
+  else fallback();
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+renderDate();
+renderBuildingGrid();
+renderEntries();
+</script>
+</body>
+</html>
