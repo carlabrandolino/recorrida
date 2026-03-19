@@ -141,7 +141,7 @@
     border: 1px solid var(--border);
   }
   .section-label {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.4px;
@@ -162,7 +162,7 @@
     padding: 9px 10px;
     background: var(--surface2);
     font-family: 'Nunito', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--muted);
     cursor: pointer;
@@ -416,16 +416,16 @@
   }
   @keyframes slide-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   .entry-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-  .entry-tag { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+  .entry-tag { font-size: 13px; font-weight: 800; padding: 4px 12px; border-radius: 20px; }
   .entry-right { display: flex; align-items: center; gap: 8px; }
-  .entry-time { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .entry-time { font-size: 13px; color: var(--muted); font-weight: 600; }
   .entry-delete {
-    background: none; border: none; color: var(--muted); font-size: 18px;
+    background: none; border: none; color: var(--muted); font-size: 20px;
     cursor: pointer; padding: 0 2px; line-height: 1; -webkit-appearance: none;
     transition: color 0.15s; font-weight: 700;
   }
   .entry-delete:active { color: var(--rose-dark); }
-  .entry-text { font-size: 13px; color: var(--text); line-height: 1.55; font-weight: 600; }
+  .entry-text { font-size: 15px; color: var(--text); line-height: 1.55; font-weight: 600; }
 
   /* ── BOTTOM BAR ──────────────────────────────────────────── */
   .bottom-bar {
@@ -503,7 +503,7 @@
   <div class="section-label" style="margin-top:14px">🔢 Juzgado / Secretaría</div>
   <div class="juzgado-row">
     <input class="juzgado-input" id="juzgadoNum" type="text"
-      inputmode="text" placeholder="62" maxlength="10"
+      inputmode="numeric" placeholder="" maxlength="10"
       autocomplete="off" autocorrect="off" spellcheck="false">
     <button class="juzgado-confirm-btn" onclick="confirmJuzgado()">Confirmar ✓</button>
   </div>
@@ -579,8 +579,9 @@ let isRecording     = false;
 let recognition     = null;
 let interimResult   = '';
 let selectedBuilding = null;  // index
-let confirmedLabel  = '';     // "Lavalle 1268 – Juzgado 62"
+let confirmedLabel  = '';
 let confirmedColor  = 'sky';
+let confirmedNum    = '';     // just the number/secretaria part
 
 // ── DATE ───────────────────────────────────────────────────────
 function renderDate() {
@@ -604,10 +605,13 @@ function selectBuilding(i, el) {
   selectedBuilding = i;
   document.querySelectorAll('.building-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
-  // reset juzgado confirm
-  document.getElementById('juzgadoNum').value = '';
-  document.getElementById('selectedDisplay').classList.remove('visible');
+  // siempre resetear y mostrar el campo de juzgado
   confirmedLabel = '';
+  confirmedColor = BUILDINGS[i].color;
+  document.getElementById('juzgadoNum').value = '';
+  document.getElementById('juzgadoNum').style.display = '';
+  document.querySelector('.juzgado-confirm-btn').style.display = '';
+  document.getElementById('selectedDisplay').classList.remove('visible');
   document.getElementById('juzgadoNum').focus();
 }
 
@@ -620,6 +624,7 @@ function confirmJuzgado() {
     return;
   }
   const b = BUILDINGS[selectedBuilding];
+  confirmedNum   = num;
   confirmedLabel = `${b.name} – ${num}`;
   confirmedColor = b.color;
 
@@ -636,6 +641,7 @@ function changeJuzgado() {
   document.getElementById('juzgadoNum').value = '';
   document.getElementById('juzgadoNum').focus();
   confirmedLabel = '';
+  confirmedNum = '';
 }
 
 function getCurrentLabel() {
@@ -656,7 +662,10 @@ function showMic() {
 function saveFallback() {
   const text = document.getElementById('fallbackText').value.trim();
   if (!text) return;
-  saveEntry(getCurrentLabel(), text, confirmedColor || (selectedBuilding !== null ? BUILDINGS[selectedBuilding].color : 'sky'));
+  const building = selectedBuilding !== null ? BUILDINGS[selectedBuilding].name : 'Sin edificio';
+  const juz = confirmedNum || document.getElementById('juzgadoNum').value.trim() || 'Sin juzgado';
+  const color = confirmedColor || (selectedBuilding !== null ? BUILDINGS[selectedBuilding].color : 'sky');
+  saveEntry(building, juz, text, color);
   document.getElementById('fallbackText').value = '';
 }
 
@@ -719,8 +728,10 @@ function stopMic() {
   resetMicUI();
   const text = interimResult.trim();
   if (text) {
+    const building = selectedBuilding !== null ? BUILDINGS[selectedBuilding].name : 'Sin edificio';
+    const juz = confirmedNum || document.getElementById('juzgadoNum').value.trim() || 'Sin juzgado';
     const color = confirmedColor || (selectedBuilding !== null ? BUILDINGS[selectedBuilding].color : 'sky');
-    saveEntry(getCurrentLabel(), text, color);
+    saveEntry(building, juz, text, color);
   }
   interimResult = '';
   document.getElementById('livePreview').textContent = '';
@@ -751,9 +762,9 @@ function showNotice(msg) {
 }
 
 // ── ENTRIES ────────────────────────────────────────────────────
-function saveEntry(juzgado, text, color) {
+function saveEntry(building, juzgado, text, color) {
   const time = new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-  entries.unshift({ id: Date.now(), juzgado, text, time, color: color || 'sky' });
+  entries.unshift({ id: Date.now(), building, juzgado, text, time, color: color || 'sky' });
   persist();
   renderEntries();
 }
@@ -778,6 +789,8 @@ function newRecorrida() {
     // reset selector
     selectedBuilding = null;
     confirmedLabel = '';
+    confirmedNum = '';
+    confirmedColor = 'sky';
     document.querySelectorAll('.building-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('juzgadoNum').value = '';
     document.getElementById('juzgadoNum').style.display = '';
@@ -805,11 +818,16 @@ function renderEntries() {
   }
   list.innerHTML = entries.map(e => {
     const style = TAG_STYLES[e.color] || TAG_STYLES.sky;
+    const buildingLabel = e.building || e.juzgado || '';
+    const juzLabel = e.building ? e.juzgado : '';
     return `
     <div class="entry-card">
       <div class="entry-top">
-        <span class="entry-tag" style="background:${style.bg};color:${style.color}">${esc(e.juzgado)}</span>
-        <div class="entry-right">
+        <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:0">
+          <span class="entry-tag" style="background:${style.bg};color:${style.color};display:inline-block;width:fit-content">${esc(buildingLabel)}</span>
+          ${juzLabel ? `<span style="font-size:14px;font-weight:800;color:var(--text);padding-left:2px">Juzgado ${esc(juzLabel)}</span>` : ''}
+        </div>
+        <div class="entry-right" style="flex-shrink:0;margin-left:8px">
           <span class="entry-time">${e.time}</span>
           <button class="entry-delete" onclick="deleteEntry(${e.id})">×</button>
         </div>
@@ -823,7 +841,10 @@ function renderEntries() {
 function copyAll() {
   if (!entries.length) return;
   const text = [...entries].reverse()
-    .map(e => `[${e.time}] ${e.juzgado}\n${e.text}`)
+    .map(e => {
+      const loc = e.building ? `${e.building} – Juzgado ${e.juzgado}` : (e.juzgado || 'Sin especificar');
+      return `[${e.time}] ${loc}\n${e.text}`;
+    })
     .join('\n\n---\n\n');
   const fallback = () => {
     const ta = document.createElement('textarea');
