@@ -417,14 +417,11 @@
   }
   .clear-btn:active { border-color: var(--rose-dark); color: var(--rose-dark); }
   .empty-state {
-    text-align: center;
-    padding: 32px 20px;
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.7;
+    background: var(--surface);
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+    min-height: 64px;
   }
-  .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
   .entry-card {
     background: var(--surface);
     border: 1.5px solid var(--border);
@@ -508,7 +505,7 @@
     </div>
   </div>
   <button class="new-recorrida-btn" id="newRecorridaBtn" onclick="newRecorrida()" disabled>
-    🗓️ Nueva recorrida — borrar día anterior
+    🗓️ Nueva recorrida
   </button>
 </header>
 
@@ -516,10 +513,10 @@
 
 <!-- EDIFICIO + JUZGADO -->
 <div class="section">
-  <div class="section-label">📍 Edificio</div>
+  <div class="section-label">📍 Edificios</div>
   <div class="building-grid" id="buildingGrid"></div>
 
-  <div class="section-label" style="margin-top:14px">🔢 Juzgado / Secretaría</div>
+  <div class="section-label" style="margin-top:14px">🔢 Juzgados / Salas / SG</div>
   <div class="juzgado-row">
     <input class="juzgado-input" id="juzgadoNum" type="text"
       inputmode="numeric" placeholder="" maxlength="10"
@@ -581,7 +578,7 @@
 
 <div class="bottom-bar">
   <button class="copy-btn" id="copyBtn" onclick="copyAll()" disabled>
-    📋 &nbsp;Copiar todo al portapapeles
+    Copiar todo
   </button>
 </div>
 
@@ -872,7 +869,7 @@ function renderEntries() {
 
   const list = document.getElementById('entriesList');
   if (!count) {
-    list.innerHTML = `<div class="empty-state"><div class="icon">🗂️</div>Elegí un edificio,<br>confirmá el juzgado<br>y dictá o escribí lo que hiciste.</div>`;
+    list.innerHTML = `<div class="empty-state"></div>`;
     return;
   }
   list.innerHTML = entries.map(e => {
