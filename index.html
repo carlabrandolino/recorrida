@@ -24,8 +24,6 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;min-height:-webkit-fill-available;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-
-  /* HEADER */
   header{background:var(--surface);padding:16px 20px 14px;border-bottom:1px solid var(--border)}
   .hdr-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
   .app-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;line-height:1.1}
@@ -34,16 +32,10 @@
   .new-btn{width:100%;background:var(--yel);color:var(--yel-t);border:2px solid var(--yel-d);border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:9px 14px;cursor:pointer;-webkit-appearance:none;text-align:center;transition:all .15s}
   .new-btn:disabled{opacity:.3;cursor:default}
   .new-btn:not(:disabled):active{background:var(--yel-d);color:#fff}
-
-  /* NOTICE */
   .notice{margin:12px 16px 0;background:var(--yel);border:1.5px solid var(--yel-d);border-radius:14px;padding:11px 14px;font-size:12px;color:var(--yel-t);line-height:1.55;display:none;font-weight:600}
   .notice.on{display:block}
-
-  /* CARD */
   .card{background:var(--surface);margin:12px 16px 0;border-radius:18px;padding:16px;box-shadow:var(--sh);border:1px solid var(--border)}
   .lbl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin-bottom:10px}
-
-  /* SEARCH INPUT */
   .search-wrap{position:relative}
   .search-input{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;padding:11px 14px;outline:none;transition:border-color .2s;-webkit-appearance:none}
   .search-input:focus{border-color:var(--mint-d);background:#fff}
@@ -59,8 +51,6 @@
   .sel-name{font-size:13px;font-weight:700;color:var(--text)}
   .sel-addr{font-size:11px;color:var(--muted);font-weight:600}
   .change-link{font-size:11px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-weight:700;flex-shrink:0;margin-left:8px}
-
-  /* MIC */
   .mic-card{background:var(--surface);margin:10px 16px 0;border-radius:18px;padding:16px;box-shadow:var(--sh);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:12px}
   .live-box{width:100%;background:#edfaf5;border:2px dashed var(--mint-d);border-radius:12px;padding:10px 14px;font-size:13px;color:var(--mint-t);line-height:1.5;font-weight:600;display:none;min-height:40px}
   .live-box.on{display:block}
@@ -75,8 +65,6 @@
   .rec-dot{width:12px;height:12px;background:var(--rose-d);border-radius:50%;animation:blink 1s infinite;flex-shrink:0}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
   .mode-toggle{font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-
-  /* TEXT INPUT */
   .text-card{background:var(--surface);margin:10px 16px 0;border-radius:18px;padding:16px;box-shadow:var(--sh);border:1px solid var(--border);display:none}
   .text-card.on{display:block}
   .text-row{display:flex;gap:8px;align-items:flex-end}
@@ -85,8 +73,6 @@
   .text-area::placeholder{color:var(--muted);font-size:12px}
   .save-btn{background:var(--mint);color:var(--mint-t);border:2px solid var(--mint-d);border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;padding:0 16px;height:76px;cursor:pointer;-webkit-appearance:none;white-space:nowrap;transition:all .15s}
   .save-btn:active{background:var(--mint-d);color:#fff}
-
-  /* ENTRIES */
   .notas-wrap{flex:1;overflow-y:auto;padding:10px 16px 16px;-webkit-overflow-scrolling:touch}
   .notas-hdr{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:10}
   .notas-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted)}
@@ -104,18 +90,12 @@
   .entry-del{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;-webkit-appearance:none;font-weight:700;transition:color .15s}
   .entry-del:active{color:var(--rose-d)}
   .entry-text{font-size:15px;color:var(--text);line-height:1.55;font-weight:600}
-
-  /* BOTTOM */
   .bottom{background:var(--surface);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
   .copy-btn{width:100%;background:var(--peach);color:var(--peach-t);border:2px solid var(--peach-d);border-radius:16px;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:15px;cursor:pointer;transition:all .15s;-webkit-appearance:none}
   .copy-btn:not(:disabled):active{background:var(--peach-d);color:#fff;transform:scale(.98)}
   .copy-btn:disabled{opacity:.35;cursor:default}
-
-  /* TOAST */
   .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--mint-d);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:13px 28px;border-radius:50px;opacity:0;pointer-events:none;transition:all .25s;z-index:200;white-space:nowrap;box-shadow:0 4px 20px rgba(91,191,159,.4)}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-
-  /* MODAL */
   .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center;padding:24px}
   .modal-ov.on{display:flex}
   .modal-box{background:var(--surface);border-radius:20px;padding:24px 20px 16px;width:100%;max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.18);font-family:'Nunito',sans-serif}
@@ -226,9 +206,7 @@
 <div class="toast" id="toast">¡Copiado! ✓</div>
 
 <script>
-
 const BASE = [
-  // Lavalle 1268
   {id:'j22', label:'Juzgado 22', addr:'Lavalle 1268, 3° piso', bld:'Lavalle 1268', color:'mint'},
   {id:'j46', label:'Juzgado 46', addr:'Lavalle 1268, 5° piso', bld:'Lavalle 1268', color:'mint'},
   {id:'j47', label:'Juzgado 47', addr:'Lavalle 1268, 5° piso', bld:'Lavalle 1268', color:'mint'},
@@ -244,81 +222,73 @@ const BASE = [
   {id:'j57', label:'Juzgado 57', addr:'Lavalle 1268, 2° piso', bld:'Lavalle 1268', color:'mint'},
   {id:'j58', label:'Juzgado 58', addr:'Lavalle 1268, 2° piso', bld:'Lavalle 1268', color:'mint'},
   {id:'j59', label:'Juzgado 59', addr:'Lavalle 1268, 2° piso', bld:'Lavalle 1268', color:'mint'},
-  {id:'j60', label:'Juzgado 60', addr:'Lavalle 1268, PB',      bld:'Lavalle 1268', color:'mint'},
-  {id:'j61', label:'Juzgado 61', addr:'Lavalle 1268, PB',      bld:'Lavalle 1268', color:'mint'},
-  {id:'j62', label:'Juzgado 62', addr:'Lavalle 1268, PB',      bld:'Lavalle 1268', color:'mint'},
-  {id:'j63', label:'Juzgado 63', addr:'Lavalle 1268, PB',      bld:'Lavalle 1268', color:'mint'},
-  {id:'j64', label:'Juzgado 64', addr:'Lavalle 1268, PB',      bld:'Lavalle 1268', color:'mint'},
+  {id:'j60', label:'Juzgado 60', addr:'Lavalle 1268, PB', bld:'Lavalle 1268', color:'mint'},
+  {id:'j61', label:'Juzgado 61', addr:'Lavalle 1268, PB', bld:'Lavalle 1268', color:'mint'},
+  {id:'j62', label:'Juzgado 62', addr:'Lavalle 1268, PB', bld:'Lavalle 1268', color:'mint'},
+  {id:'j63', label:'Juzgado 63', addr:'Lavalle 1268, PB', bld:'Lavalle 1268', color:'mint'},
+  {id:'j64', label:'Juzgado 64', addr:'Lavalle 1268, PB', bld:'Lavalle 1268', color:'mint'},
   {id:'j65', label:'Juzgado 65', addr:'Lavalle 1268, 3° piso', bld:'Lavalle 1268', color:'mint'},
   {id:'j66', label:'Juzgado 66', addr:'Lavalle 1268, 3° piso', bld:'Lavalle 1268', color:'mint'},
   {id:'j67', label:'Juzgado 67', addr:'Lavalle 1268, 3° piso', bld:'Lavalle 1268', color:'mint'},
-  // Cerrito 264
-  {id:'j41', label:'Juzgado 41', addr:'Cerrito 264, 6° piso',  bld:'Cerrito 264', color:'lav'},
-  {id:'j42', label:'Juzgado 42', addr:'Cerrito 264, 6° piso',  bld:'Cerrito 264', color:'lav'},
-  {id:'j43', label:'Juzgado 43', addr:'Cerrito 264, 7° piso',  bld:'Cerrito 264', color:'lav'},
-  {id:'j45', label:'Juzgado 45', addr:'Cerrito 264, 7° piso',  bld:'Cerrito 264', color:'lav'},
-  // Paraná 520
-  {id:'j68', label:'Juzgado 68', addr:'Paraná 520, 1° piso',   bld:'Paraná 520', color:'sky'},
-  {id:'j70', label:'Juzgado 70', addr:'Paraná 520, 2° piso',   bld:'Paraná 520', color:'sky'},
-  {id:'j71', label:'Juzgado 71', addr:'Paraná 520, 9° piso',   bld:'Paraná 520', color:'sky'},
-  {id:'j75', label:'Juzgado 75', addr:'Paraná 520, 10° piso',  bld:'Paraná 520', color:'sky'},
-  {id:'j76', label:'Juzgado 76', addr:'Paraná 520, 7° piso',   bld:'Paraná 520', color:'sky'},
-  {id:'j78', label:'Juzgado 78', addr:'Paraná 520, 8° piso',   bld:'Paraná 520', color:'sky'},
-  {id:'j79', label:'Juzgado 79', addr:'Paraná 520, 11° piso',  bld:'Paraná 520', color:'sky'},
-  {id:'j80', label:'Juzgado 80', addr:'Paraná 520, 2° piso',   bld:'Paraná 520', color:'sky'},
-  // Diag. Roque Sáenz Peña 760
-  {id:'j1',  label:'Juzgado 1',  addr:'Diag. RSP 760, 1° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j2',  label:'Juzgado 2',  addr:'Diag. RSP 760, 1° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j3',  label:'Juzgado 3',  addr:'Diag. RSP 760, 6° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j4',  label:'Juzgado 4',  addr:'Diag. RSP 760, 7° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j5',  label:'Juzgado 5',  addr:'Diag. RSP 760, 7° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j6',  label:'Juzgado 6',  addr:'Diag. RSP 760, 7° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j7',  label:'Juzgado 7',  addr:'Diag. RSP 760, 2° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j8',  label:'Juzgado 8',  addr:'Diag. RSP 760, 1° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j9',  label:'Juzgado 9',  addr:'Diag. RSP 760, 8° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j10', label:'Juzgado 10', addr:'Diag. RSP 760, 8° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j11', label:'Juzgado 11', addr:'Diag. RSP 760, 6° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j12', label:'Juzgado 12', addr:'Diag. RSP 760, 6° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j13', label:'Juzgado 13', addr:'Diag. RSP 760, 8° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j15', label:'Juzgado 15', addr:'Diag. RSP 760, 9° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j16', label:'Juzgado 16', addr:'Diag. RSP 760, 9° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j17', label:'Juzgado 17', addr:'Diag. RSP 760, 9° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j41', label:'Juzgado 41', addr:'Cerrito 264, 6° piso', bld:'Cerrito 264', color:'lav'},
+  {id:'j42', label:'Juzgado 42', addr:'Cerrito 264, 6° piso', bld:'Cerrito 264', color:'lav'},
+  {id:'j43', label:'Juzgado 43', addr:'Cerrito 264, 7° piso', bld:'Cerrito 264', color:'lav'},
+  {id:'j45', label:'Juzgado 45', addr:'Cerrito 264, 7° piso', bld:'Cerrito 264', color:'lav'},
+  {id:'j68', label:'Juzgado 68', addr:'Paraná 520, 1° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j70', label:'Juzgado 70', addr:'Paraná 520, 2° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j71', label:'Juzgado 71', addr:'Paraná 520, 9° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j75', label:'Juzgado 75', addr:'Paraná 520, 10° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j76', label:'Juzgado 76', addr:'Paraná 520, 7° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j78', label:'Juzgado 78', addr:'Paraná 520, 8° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j79', label:'Juzgado 79', addr:'Paraná 520, 11° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j80', label:'Juzgado 80', addr:'Paraná 520, 2° piso', bld:'Paraná 520', color:'sky'},
+  {id:'j1',  label:'Juzgado 1',  addr:'Diag. RSP 760, 1° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j2',  label:'Juzgado 2',  addr:'Diag. RSP 760, 1° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j3',  label:'Juzgado 3',  addr:'Diag. RSP 760, 6° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j4',  label:'Juzgado 4',  addr:'Diag. RSP 760, 7° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j5',  label:'Juzgado 5',  addr:'Diag. RSP 760, 7° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j6',  label:'Juzgado 6',  addr:'Diag. RSP 760, 7° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j7',  label:'Juzgado 7',  addr:'Diag. RSP 760, 2° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j8',  label:'Juzgado 8',  addr:'Diag. RSP 760, 1° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j9',  label:'Juzgado 9',  addr:'Diag. RSP 760, 8° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j10', label:'Juzgado 10', addr:'Diag. RSP 760, 8° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j11', label:'Juzgado 11', addr:'Diag. RSP 760, 6° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j12', label:'Juzgado 12', addr:'Diag. RSP 760, 6° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j13', label:'Juzgado 13', addr:'Diag. RSP 760, 8° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j15', label:'Juzgado 15', addr:'Diag. RSP 760, 9° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j16', label:'Juzgado 16', addr:'Diag. RSP 760, 9° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j17', label:'Juzgado 17', addr:'Diag. RSP 760, 9° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
   {id:'j19', label:'Juzgado 19', addr:'Diag. RSP 760, 10° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j20', label:'Juzgado 20', addr:'Diag. RSP 760, 2° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j21', label:'Juzgado 21', addr:'Diag. RSP 760, 2° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j24', label:'Juzgado 24', addr:'Diag. RSP 760, 3° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j25', label:'Juzgado 25', addr:'Diag. RSP 760, 3° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j28', label:'Juzgado 28', addr:'Diag. RSP 760, 3° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j29', label:'Juzgado 29', addr:'Diag. RSP 760, 4° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j32', label:'Juzgado 32', addr:'Diag. RSP 760, 4° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j33', label:'Juzgado 33', addr:'Diag. RSP 760, 4° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j36', label:'Juzgado 36', addr:'Diag. RSP 760, 5° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j37', label:'Juzgado 37', addr:'Diag. RSP 760, 5° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'j40', label:'Juzgado 40', addr:'Diag. RSP 760, 5° piso',  bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-
-  // Secretaría General — Lavalle 1554
-  {id:'sg1',  label:'Mesa Gral. de Entradas',    addr:'Lavalle 1554',          bld:'Lavalle 1554', color:'rose'},
-  {id:'sg2',  label:'Oficina de Acuerdos',        addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'sg3',  label:'Oficina de Personal',        addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'sg4',  label:'Habilitación',               addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'sg5',  label:'Mesa Receptora Lav. 1268',   addr:'Lavalle 1554',          bld:'Lavalle 1554', color:'rose'},
-  {id:'sg6',  label:'Mesa Receptora Diag. 760',   addr:'Diag. RSP 760',         bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
-  {id:'sg7',  label:'Mesa Receptora Perón 990',   addr:'Tte. Gral. Perón 990',  bld:'Tte. Gral. J.D. Perón 990', color:'lav'},
-  // Prosecretaría — Lavalle 1554
-  {id:'ps1',  label:'Biblioteca',                 addr:'Lavalle 1554, 4° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'ps2',  label:'Oficina de Jurisprudencia',  addr:'Lavalle 1554, 4° piso', bld:'Lavalle 1554', color:'rose'},
-  // Salas — Lavalle 1554
-  {id:'s1',  label:'Sala I',   addr:'Lavalle 1554, 6° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s2',  label:'Sala II',  addr:'Lavalle 1554, 7° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s3',  label:'Sala III', addr:'Lavalle 1554, 3° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s4',  label:'Sala IV',  addr:'Lavalle 1554, 5° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s5',  label:'Sala V',   addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s6',  label:'Sala VI',  addr:'Lavalle 1554, 2° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s7',  label:'Sala VII', addr:'Lavalle 1554, 5° piso', bld:'Lavalle 1554', color:'rose'},
-  {id:'s8',  label:'Sala VIII',addr:'Lavalle 1554, 3° piso', bld:'Lavalle 1554', color:'rose'},
-  // Salas — Diag. RSP 1190
-  {id:'s9',  label:'Sala IX',  addr:'Diag. RSP 1190, 1° piso', bld:'Diag. Roque Sáenz Peña 1190', color:'rose'},
-  {id:'s10', label:'Sala X',   addr:'Diag. RSP 1190, 1° piso', bld:'Diag. Roque Sáenz Peña 1190', color:'rose'},
+  {id:'j20', label:'Juzgado 20', addr:'Diag. RSP 760, 2° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j21', label:'Juzgado 21', addr:'Diag. RSP 760, 2° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j24', label:'Juzgado 24', addr:'Diag. RSP 760, 3° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j25', label:'Juzgado 25', addr:'Diag. RSP 760, 3° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j28', label:'Juzgado 28', addr:'Diag. RSP 760, 3° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j29', label:'Juzgado 29', addr:'Diag. RSP 760, 4° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j32', label:'Juzgado 32', addr:'Diag. RSP 760, 4° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j33', label:'Juzgado 33', addr:'Diag. RSP 760, 4° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j36', label:'Juzgado 36', addr:'Diag. RSP 760, 5° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j37', label:'Juzgado 37', addr:'Diag. RSP 760, 5° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'j40', label:'Juzgado 40', addr:'Diag. RSP 760, 5° piso', bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'sg1', label:'Mesa Gral. de Entradas',   addr:'Lavalle 1554',          bld:'Lavalle 1554', color:'rose'},
+  {id:'sg2', label:'Oficina de Acuerdos',       addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
+  {id:'sg3', label:'Oficina de Personal',       addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
+  {id:'sg4', label:'Habilitación',              addr:'Lavalle 1554, 1° piso', bld:'Lavalle 1554', color:'rose'},
+  {id:'sg5', label:'Mesa Receptora Lav. 1268',  addr:'Lavalle 1554',          bld:'Lavalle 1554', color:'rose'},
+  {id:'sg6', label:'Mesa Receptora Diag. 760',  addr:'Diag. RSP 760',         bld:'Diag. Roque Sáenz Peña 760', color:'peach'},
+  {id:'sg7', label:'Mesa Receptora Perón 990',  addr:'Tte. Gral. Perón 990',  bld:'Tte. Gral. J.D. Perón 990', color:'lav'},
+  {id:'ps1', label:'Biblioteca',                addr:'Lavalle 1554, 4° piso', bld:'Lavalle 1554', color:'rose'},
+  {id:'ps2', label:'Oficina de Jurisprudencia', addr:'Lavalle 1554, 4° piso', bld:'Lavalle 1554', color:'rose'},
+  {id:'s1',  label:'Sala I',    addr:'Lavalle 1554, 6° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s2',  label:'Sala II',   addr:'Lavalle 1554, 7° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s3',  label:'Sala III',  addr:'Lavalle 1554, 3° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s4',  label:'Sala IV',   addr:'Lavalle 1554, 5° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s5',  label:'Sala V',    addr:'Lavalle 1554, 1° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s6',  label:'Sala VI',   addr:'Lavalle 1554, 2° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s7',  label:'Sala VII',  addr:'Lavalle 1554, 5° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s8',  label:'Sala VIII', addr:'Lavalle 1554, 3° piso',   bld:'Lavalle 1554', color:'rose'},
+  {id:'s9',  label:'Sala IX',   addr:'Diag. RSP 1190, 1° piso', bld:'Diag. Roque Sáenz Peña 1190', color:'rose'},
+  {id:'s10', label:'Sala X',    addr:'Diag. RSP 1190, 1° piso', bld:'Diag. Roque Sáenz Peña 1190', color:'rose'},
 ];
 
 const COLORES = {
@@ -334,16 +304,17 @@ const CORRECCIONES = {
   'info lec':'infoleg','infolec':'infoleg','infolego':'infoleg',
   'info legs':'infoleg','lex mark':'Lexmark','wi fi':'WiFi',
 };
+
 function corregirTexto(t){
   let r=t;
-  for(const [w,c] of Object.notas(CORRECCIONES))
+  for(const [w,c] of Object.entries(CORRECCIONES))
     r=r.replace(new RegExp(w,'gi'),c);
   return r;
 }
 
 let notas=[];
 try{notas=JSON.parse(localStorage.getItem('juz_v3')||'[]')}catch(e){}
-let itemSeleccionado=null; // selected DB item
+let itemSeleccionado=null;
 let grabando=false, recognition=null, transcripcion='';
 let accionModal=null;
 
@@ -358,23 +329,12 @@ function alBuscar(val){
   const q=val.trim().toLowerCase();
   const res=document.getElementById('searchResults');
   if(!q){res.classList.remove('on');res.innerHTML='';return;}
-
   const matches=BASE.filter(item=>{
-    // match by number (e.g. "53"), full label, or building
-    const num=item.id.replace(/[a-z]/g,''); // "53" from "j53"
-    return num===q ||
-      item.label.toLowerCase().includes(q) ||
-      item.bld.toLowerCase().includes(q) ||
-      item.id.toLowerCase().includes(q);
+    const num=item.id.replace(/[a-z]/g,'');
+    return num===q||item.label.toLowerCase().includes(q)||item.bld.toLowerCase().includes(q)||item.id.toLowerCase().includes(q);
   }).slice(0,8);
-
   if(!matches.length){res.classList.remove('on');res.innerHTML='';return;}
-
-  res.innerHTML=matches.map(m=>
-    `<div class="search-item" onclick="elegirItem('${m.id}')">
-      ${m.label}<small>${m.addr}</small>
-    </div>`
-  ).join('');
+  res.innerHTML=matches.map(m=>`<div class="search-item" onclick="elegirItem('${m.id}')">${m.label}<small>${m.addr}</small></div>`).join('');
   res.classList.add('on');
 }
 
@@ -396,8 +356,8 @@ function cambiarSeleccion(){
 }
 
 function obtenerActual(){
-  if(itemSeleccionado) return {bld:itemSeleccionado.bld, juz:itemSeleccionado.label, color:itemSeleccionado.color};
-  return {bld:'Sin edificio', juz:'Sin juzgado', color:'sky'};
+  if(itemSeleccionado) return {bld:itemSeleccionado.bld,juz:itemSeleccionado.label,color:itemSeleccionado.color};
+  return {bld:'Sin edificio',juz:'Sin juzgado',color:'sky'};
 }
 
 function mostrarTexto(){
@@ -413,7 +373,7 @@ function saveText(){
   const t=document.getElementById('textArea').value.trim();
   if(!t) return;
   const c=obtenerActual();
-  agregarNota(c.bld, c.juz, corregirTexto(t), c.color);
+  agregarNota(c.bld,c.juz,corregirTexto(t),c.color);
   document.getElementById('textArea').value='';
 }
 
@@ -423,15 +383,13 @@ function iniciarMic(){
   recognition=new SR();
   recognition.lang='es-AR';
   recognition.continuous=true;
-  recognition.transcripcionResults=true;
-
+  recognition.interimResults=true;
   recognition.onstart=()=>{
     grabando=true;
     document.getElementById('micIdle').style.display='none';
     document.getElementById('micRec').style.display='flex';
     document.getElementById('liveBox').classList.add('on');
   };
-
   recognition.onresult=e=>{
     let fin='',intr='';
     for(let i=e.resultIndex;i<e.results.length;i++){
@@ -441,18 +399,15 @@ function iniciarMic(){
     if(fin) transcripcion+=fin;
     document.getElementById('liveBox').textContent=transcripcion+intr;
   };
-
   recognition.onerror=e=>{
-    recognition.onend=null; grabando=false; resetearMic();
+    recognition.onend=null;grabando=false;resetearMic();
     if(e.error==='not-allowed'||e.error==='service-not-allowed')
       mostrarAlerta('⚠️ Micrófono denegado. Necesitás abrir desde HTTPS. Usá modo texto.');
     else if(e.error!=='aborted')
       mostrarAlerta('⚠️ Error micrófono: '+e.error);
     mostrarTexto();
   };
-
-  recognition.onend=()=>{ if(grabando){try{recognition.start();}catch(e){}} };
-
+  recognition.onend=()=>{if(grabando){try{recognition.start();}catch(e){}}};
   transcripcion='';
   try{recognition.start();}catch(e){mostrarAlerta('No se pudo iniciar el micrófono.');mostrarTexto();}
 }
@@ -465,7 +420,7 @@ function detenerMic(guardar){
     const t=corregirTexto(transcripcion.trim());
     if(t){
       const c=obtenerActual();
-      agregarNota(c.bld, c.juz, t, c.color);
+      agregarNota(c.bld,c.juz,t,c.color);
     }
   }
   transcripcion='';
@@ -493,19 +448,13 @@ function borrarNota(id){
 
 function borrarTodo(){
   if(!notas.length) return;
-  abrirModal('¿Borrar todas las notas?','','Borrar todo',()=>{
-    notas=[];
-    guardarLocal();
-    mostrar();
-  });
+  abrirModal('¿Borrar todas las notas?','','Borrar todo',()=>{notas=[];guardarLocal();mostrar();});
 }
 
 function nuevaRecorrida(){
   if(!notas.length) return;
   abrirModal('¿Nueva recorrida?','Se borran todas las notas del día.','Borrar y empezar',()=>{
-    notas=[];
-    guardarLocal();
-    mostrar();
+    notas=[];guardarLocal();mostrar();
     itemSeleccionado=null;
     document.getElementById('selDisplay').classList.remove('on');
     document.getElementById('searchInput').value='';
@@ -526,27 +475,13 @@ function mostrar(){
   if(!n){list.innerHTML='<div class="empty-box"></div>';return;}
   list.innerHTML=notas.map(e=>{
     const s=COLORES[e.color]||COLORES.sky;
-    return `<div class="entry-card">
-      <div class="entry-top">
-        <div class="entry-left">
-          <span class="entry-tag" style="background:${s.bg};color:${s.col}">${esc(e.bld)}</span>
-          <span class="entry-juz">${esc(e.juz)}</span>
-        </div>
-        <div class="entry-right">
-          <span class="entry-time">${e.time}</span>
-          <button class="entry-del" onclick="borrarNota(${e.id})">×</button>
-        </div>
-      </div>
-      <div class="entry-text">${esc(e.text)}</div>
-    </div>`;
+    return `<div class="entry-card"><div class="entry-top"><div class="entry-left"><span class="entry-tag" style="background:${s.bg};color:${s.col}">${esc(e.bld)}</span><span class="entry-juz">${esc(e.juz)}</span></div><div class="entry-right"><span class="entry-time">${e.time}</span><button class="entry-del" onclick="borrarNota(${e.id})">×</button></div></div><div class="entry-text">${esc(e.text)}</div></div>`;
   }).join('');
 }
 
 function copiarTodo(){
   if(!notas.length) return;
-  const txt=[...notas].reverse()
-    .map(e=>`[${e.time}] ${e.bld} — ${e.juz}\n${e.text}`)
-    .join('\n\n---\n\n');
+  const txt=[...notas].reverse().map(e=>`[${e.time}] ${e.bld} — ${e.juz}\n${e.text}`).join('\n\n---\n\n');
   const fb=()=>{
     const ta=document.createElement('textarea');
     ta.value=txt;ta.style.cssText='position:fixed;opacity:0;top:0;left:0;width:1px;height:1px';
@@ -554,9 +489,7 @@ function copiarTodo(){
     try{document.execCommand('copy');mostrarAviso();}catch(e){alert('No se pudo copiar.');}
     document.body.removeChild(ta);
   };
-  navigator.clipboard&&navigator.clipboard.writeText
-    ?navigator.clipboard.writeText(txt).then(mostrarAviso).catch(fb)
-    :fb();
+  navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(mostrarAviso).catch(fb):fb();
 }
 
 function mostrarAviso(){
@@ -572,12 +505,14 @@ function abrirModal(title,body,label,cb){
   accionModal=cb;
   document.getElementById('modal').classList.add('on');
 }
+
 function cerrarModal(){
   document.getElementById('modal').classList.remove('on');
   accionModal=null;
 }
+
 function confirmarModal(){
-  const cb = accionModal;
+  const cb=accionModal;
   cerrarModal();
   if(cb) cb();
 }
